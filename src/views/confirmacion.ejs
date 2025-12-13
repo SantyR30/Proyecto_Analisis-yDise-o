@@ -1,0 +1,19 @@
+<%
+const body = `
+    <div class="confirmation-page">
+        <div class="confirmation-container">
+            <div class="confirmation-content">
+                <div class="confirmation-icon-circle">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h1 class="confirmation-title">¡Orden Creada exitosamente!</h1>
+                <p class="confirmation-message">Tu Orden ha sido procesada exitosamente</p>
+                <button class="btn-return-home" onclick="window.location.href='/'">
+                    Regresar al inicio
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+%>
+<%- include('layout/layout', { title: 'SGEE - Orden Confirmada', body: body }) %>

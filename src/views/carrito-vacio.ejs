@@ -1,0 +1,18 @@
+<%
+const body = `
+    <div class="empty-cart-page">
+        <div class="empty-cart-container">
+            <div class="empty-cart-content">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h2 class="empty-cart-title">Tu Carrito está vacío</h2>
+                <button class="btn-view-products" onclick="window.location.href='/'">
+                    Ver productos
+                </button>
+            </div>
+        </div>
+    </div>
+`;
+%>
+<%- include('layout/layout', { title: 'SGEE - Carrito Vacío', body: body }) %>

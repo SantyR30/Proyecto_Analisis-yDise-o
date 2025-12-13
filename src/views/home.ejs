@@ -1,0 +1,126 @@
+<%
+const body = `
+    <!-- Banner Promocional -->
+    <section class="banner-section">
+        <div class="banner-container">
+            <div class="banner-content">
+                <div class="banner-illustration">
+                    <div class="banner-elements">
+                        <i class="fas fa-shopping-cart banner-cart"></i>
+                        <div class="banner-stores">
+                            <div class="store">ONLINE STORE</div>
+                            <div class="store">STORE</div>
+                        </div>
+                        <i class="fas fa-truck banner-truck"></i>
+                        <div class="banner-boxes">
+                            <div class="box"></div>
+                            <div class="box"></div>
+                            <div class="box"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-text">
+                    <h1 class="banner-title">Online.</h1>
+                    <h2 class="banner-subtitle">SHOPPING</h2>
+                </div>
+            </div>
+            <div class="banner-controls">
+                <button class="banner-arrow left"><i class="fas fa-chevron-left"></i></button>
+                <button class="banner-arrow right"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catálogo de Productos -->
+    <section class="products-section">
+        <div class="products-container">
+            <div class="products-grid">
+                <!-- Producto 1: Laptop Pro 15 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <h3 class="product-title">Laptop Pro 15</h3>
+                    <p class="product-description">Potente laptop para profesionales con procesador de última generación</p>
+                    <div class="product-price">$2.500.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <!-- Producto 2: Auriculares Bluetooth -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-headphones"></i>
+                    </div>
+                    <h3 class="product-title">Auriculares Bluetooth</h3>
+                    <p class="product-description">Auriculares inalámbricos con cancelación de ruido</p>
+                    <div class="product-price">$500.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <!-- Producto 3: Smartwatch Fitness -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3 class="product-title">Smartwatch Fitness</h3>
+                    <p class="product-description">Reloj inteligente con monitor de salud y fitness</p>
+                    <div class="product-price">$1.150.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <!-- Producto 4: Teclado Mecánico RGB -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-keyboard"></i>
+                    </div>
+                    <h3 class="product-title">Teclado Mecánico RGB</h3>
+                    <p class="product-description">Teclado gaming con switches mecánicos e iluminación RGB</p>
+                    <div class="product-price">$800.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <!-- Producto 5: Mouse Inalámbrico -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-mouse"></i>
+                    </div>
+                    <h3 class="product-title">Mouse Inalámbrico</h3>
+                    <p class="product-description">Mouse ergonómico de alta precisión</p>
+                    <div class="product-price">$10.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+
+                <!-- Producto 6: Monitor 4K 27" -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3 class="product-title">Monitor 4K 27"</h3>
+                    <p class="product-description">Monitor ultra HD con colores vibrantes y alta tasa de refresco</p>
+                    <div class="product-price">$2.500.000</div>
+                    <button class="btn-add-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        Agregar al carrito
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+`;
+%>
+<%- include('layout/layout', { title: 'SGEE - Inicio', body: body }) %>
