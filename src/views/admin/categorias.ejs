@@ -1,0 +1,93 @@
+<%
+let body = '<div class="admin-dashboard">';
+body += '<div class="dashboard-header">';
+body += '<h1 class="dashboard-main-title">Gestión de Categorías</h1>';
+body += '<p class="dashboard-subtitle">Administra las categorías de productos</p>';
+body += '</div>';
+
+body += '<div class="admin-sections">';
+body += '<div class="section-nav">';
+body += '<a href="/admin/dashboard" class="section-nav-item"><i class="fas fa-cube"></i> Productos</a>';
+body += '<a href="/admin/categorias" class="section-nav-item active"><i class="fas fa-tags"></i> Categorías</a>';
+body += '</div>';
+
+body += '<div class="stats-cards">';
+body += '<div class="stat-card">';
+body += '<div class="stat-icon stat-icon-blue"><i class="fas fa-tags"></i></div>';
+body += '<div class="stat-content">';
+body += '<h3 class="stat-title">Total Categorías</h3>';
+body += '<p class="stat-value">' + (typeof totalCategories !== 'undefined' ? totalCategories : (typeof categories !== 'undefined' ? categories.length : 0)) + '</p>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="categories-section-admin">';
+body += '<div class="section-header">';
+body += '<h2 class="section-title">Categorías</h2>';
+body += '<button class="btn-add-product" onclick="openAddCategoryModal()"><i class="fas fa-plus"></i> Agregar Categoría</button>';
+body += '</div>';
+
+body += '<div class="categories-grid-admin">';
+if (typeof categories !== 'undefined' && categories.length > 0) {
+    categories.forEach(category => {
+        body += '<div class="category-card-admin">';
+        body += '<div class="category-icon-admin">';
+        body += '<i class="' + (category.icon || 'fas fa-box') + '"></i>';
+        body += '</div>';
+        body += '<div class="category-info-admin">';
+        body += '<h3 class="category-title-admin">' + category.nombre + '</h3>';
+        body += '<p class="category-description-admin">' + category.descripcion + '</p>';
+        body += '<div class="category-status-admin">';
+        if (category.activa !== false) {
+            body += '<span class="status-badge status-active"><i class="fas fa-check-circle"></i> Activa</span>';
+        } else {
+            body += '<span class="status-badge status-inactive"><i class="fas fa-times-circle"></i> Inactiva</span>';
+        }
+        body += '</div>';
+        body += '<div class="category-actions">';
+        body += '<a href="/admin/categorias/editar/' + category.id + '" class="btn-edit-product"><i class="fas fa-edit"></i> Editar</a>';
+        body += '<a href="/admin/categorias/eliminar/' + category.id + '" class="btn-delete-product" onclick="return confirm(\'¿Estás seguro de eliminar esta categoría?\')"><i class="fas fa-trash"></i> Eliminar</a>';
+        body += '</div>';
+        body += '</div>';
+        body += '</div>';
+    });
+} else {
+    body += '<div class="no-categories">';
+    body += '<p>No hay categorías disponibles</p>';
+    body += '</div>';
+}
+body += '</div>';
+body += '</div>';
+body += '</div>';
+
+// Modal para agregar categoría
+body += '<div id="addCategoryModal" class="modal">';
+body += '<div class="modal-content">';
+body += '<div class="modal-header">';
+body += '<h2>Agregar Nueva Categoría</h2>';
+body += '<span class="close-modal" onclick="closeAddCategoryModal()">&times;</span>';
+body += '</div>';
+body += '<form id="addCategoryForm" class="product-form" method="POST" action="/admin/categorias/crear">';
+body += '<div class="form-group">';
+body += '<label for="nombre">Nombre de la Categoría</label>';
+body += '<input type="text" id="nombre" name="nombre" class="form-input" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="descripcion">Descripción</label>';
+body += '<textarea id="descripcion" name="descripcion" class="form-input" rows="4" required></textarea>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="icon">Icono (Font Awesome)</label>';
+body += '<input type="text" id="icon" name="icon" class="form-input" placeholder="fas fa-box" value="fas fa-box">';
+body += '<small class="form-help">Ejemplo: fas fa-laptop, fas fa-headphones, etc.</small>';
+body += '</div>';
+body += '<div class="modal-actions">';
+body += '<button type="submit" class="btn-save">Guardar Categoría</button>';
+body += '<button type="button" class="btn-cancel" onclick="closeAddCategoryModal()">Cancelar</button>';
+body += '</div>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Gestión de Categorías', body: body }) %>
+

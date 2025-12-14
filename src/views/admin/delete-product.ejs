@@ -1,0 +1,35 @@
+<%
+let body = '<div class="delete-product-page">';
+body += '<div class="delete-product-container">';
+body += '<div class="delete-confirmation">';
+body += '<div class="delete-icon">';
+body += '<i class="fas fa-exclamation-triangle"></i>';
+body += '</div>';
+body += '<h1 class="delete-title">¿Estás seguro de eliminar este producto?</h1>';
+body += '<div class="product-to-delete">';
+if (product.imagen) {
+    body += '<div class="product-image-preview"><img src="/uploads/' + product.imagen + '" alt="' + product.nombre + '"></div>';
+} else {
+    body += '<div class="product-image-preview"><i class="' + (product.icon || 'fas fa-box') + '"></i></div>';
+}
+body += '<h2 class="product-name">' + product.nombre + '</h2>';
+body += '<p class="product-description">' + product.descripcion + '</p>';
+body += '<p class="product-details">Categoría: ' + product.categoria + '</p>';
+body += '<p class="product-details">Precio: $' + new Intl.NumberFormat('es-CO').format(product.precio) + '</p>';
+body += '</div>';
+body += '<div class="delete-warning">';
+body += '<p><strong>Esta acción no se puede deshacer.</strong></p>';
+body += '<p>El producto será eliminado permanentemente del sistema.</p>';
+body += '</div>';
+body += '<div class="delete-actions">';
+body += '<form method="POST" action="/admin/productos/eliminar/' + product.id + '" style="display: inline;">';
+body += '<button type="submit" class="btn-confirm-delete">Sí, eliminar producto</button>';
+body += '</form>';
+body += '<a href="/admin/dashboard" class="btn-cancel-delete">Cancelar</a>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Eliminar Producto', body: body }) %>
+

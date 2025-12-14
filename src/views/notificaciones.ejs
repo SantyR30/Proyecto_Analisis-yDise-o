@@ -1,0 +1,18 @@
+<%
+let body = '<div class="notifications-page">';
+body += '<div class="notifications-container">';
+body += '<div class="notifications-header">';
+body += '<h1 class="notifications-title">Notificaciones</h1>';
+body += '</div>';
+body += '<div class="notifications-empty">';
+body += '<div class="empty-notifications-icon">';
+body += '<i class="fas fa-bell-slash"></i>';
+body += '</div>';
+body += '<h2 class="empty-notifications-title">No tienes notificaciones</h2>';
+body += '<p class="empty-notifications-message">Cuando tengas nuevas notificaciones, aparecerán aquí</p>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('layout/layout', { title: 'SGEE - Notificaciones', body: body }) %>
+

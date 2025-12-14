@@ -1,0 +1,46 @@
+<%
+let body = '<div class="admin-dashboard">';
+body += '<div class="dashboard-header">';
+body += '<h1 class="dashboard-main-title">Editar Categoría</h1>';
+body += '<p class="dashboard-subtitle">Modifica los datos de la categoría</p>';
+body += '</div>';
+
+body += '<div class="admin-sections">';
+body += '<div class="section-nav">';
+body += '<a href="/admin/dashboard" class="section-nav-item"><i class="fas fa-cube"></i> Productos</a>';
+body += '<a href="/admin/categorias" class="section-nav-item active"><i class="fas fa-tags"></i> Categorías</a>';
+body += '</div>';
+
+body += '<div class="edit-form-container">';
+body += '<form method="POST" action="/admin/categorias/actualizar/' + category.id + '" class="product-form">';
+body += '<div class="form-group">';
+body += '<label for="nombre">Nombre de la Categoría</label>';
+body += '<input type="text" id="nombre" name="nombre" class="form-input" value="' + category.nombre + '" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="descripcion">Descripción</label>';
+body += '<textarea id="descripcion" name="descripcion" class="form-input" rows="4" required>' + category.descripcion + '</textarea>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="icon">Icono (Font Awesome)</label>';
+body += '<input type="text" id="icon" name="icon" class="form-input" placeholder="fas fa-box" value="' + (category.icon || 'fas fa-box') + '">';
+body += '<small class="form-help">Ejemplo: fas fa-laptop, fas fa-headphones, etc.</small>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="activa">Estado</label>';
+body += '<select id="activa" name="activa" class="form-input">';
+body += '<option value="true"' + (category.activa !== false ? ' selected' : '') + '>Activa</option>';
+body += '<option value="false"' + (category.activa === false ? ' selected' : '') + '>Inactiva</option>';
+body += '</select>';
+body += '</div>';
+body += '<div class="form-actions">';
+body += '<button type="submit" class="btn-save">Guardar Cambios</button>';
+body += '<a href="/admin/categorias" class="btn-cancel">Cancelar</a>';
+body += '</div>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Editar Categoría', body: body }) %>
+

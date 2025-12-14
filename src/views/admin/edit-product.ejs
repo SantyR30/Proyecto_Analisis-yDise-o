@@ -1,0 +1,54 @@
+<%
+let body = '<div class="edit-product-page">';
+body += '<div class="edit-product-container">';
+body += '<div class="page-header">';
+body += '<h1 class="page-title">Editar Producto</h1>';
+body += '<a href="/admin/dashboard" class="btn-back"><i class="fas fa-arrow-left"></i> Volver</a>';
+body += '</div>';
+
+body += '<form class="product-form" method="POST" action="/admin/productos/actualizar/' + product.id + '">';
+body += '<div class="form-group">';
+body += '<label for="nombre">Nombre del Producto</label>';
+body += '<input type="text" id="nombre" name="nombre" class="form-input" value="' + product.nombre + '" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="descripcion">Descripción</label>';
+body += '<textarea id="descripcion" name="descripcion" class="form-input" rows="4" required>' + product.descripcion + '</textarea>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="precio">Precio</label>';
+body += '<input type="number" id="precio" name="precio" class="form-input" min="0" step="0.01" value="' + product.precio + '" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="categoria">Categoría</label>';
+body += '<select id="categoria" name="categoria" class="form-input" required>';
+body += '<option value="">Seleccione una categoría</option>';
+body += '<option value="Electrónica"' + (product.categoria === 'Electrónica' ? ' selected' : '') + '>Electrónica</option>';
+body += '<option value="Audio"' + (product.categoria === 'Audio' ? ' selected' : '') + '>Audio</option>';
+body += '<option value="Wearables"' + (product.categoria === 'Wearables' ? ' selected' : '') + '>Wearables</option>';
+body += '<option value="Periféricos"' + (product.categoria === 'Periféricos' ? ' selected' : '') + '>Periféricos</option>';
+body += '<option value="Monitores"' + (product.categoria === 'Monitores' ? ' selected' : '') + '>Monitores</option>';
+body += '<option value="Otros"' + (product.categoria === 'Otros' ? ' selected' : '') + '>Otros</option>';
+body += '</select>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="imagen">Imagen del Producto</label>';
+if (product.imagen) {
+    body += '<div class="current-image">';
+    body += '<p>Imagen actual:</p>';
+    body += '<img src="/uploads/' + product.imagen + '" alt="' + product.nombre + '" style="max-width: 200px; margin-top: 10px;">';
+    body += '</div>';
+}
+body += '<input type="file" id="imagen" name="imagen" class="form-input" accept="image/*">';
+body += '<small>Dejar vacío para mantener la imagen actual</small>';
+body += '</div>';
+body += '<div class="form-actions">';
+body += '<button type="submit" class="btn-save">Actualizar Producto</button>';
+body += '<a href="/admin/dashboard" class="btn-cancel">Cancelar</a>';
+body += '</div>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Editar Producto', body: body }) %>
+

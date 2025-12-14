@@ -1,0 +1,119 @@
+<%
+let body = '<div class="admin-dashboard">';
+body += '<div class="dashboard-header">';
+body += '<h1 class="dashboard-main-title">Panel de Administración</h1>';
+body += '<p class="dashboard-subtitle">Gestiona tus productos y órdenes</p>';
+body += '</div>';
+
+body += '<div class="stats-cards">';
+body += '<div class="stat-card">';
+body += '<div class="stat-icon stat-icon-blue"><i class="fas fa-cube"></i></div>';
+body += '<div class="stat-content">';
+body += '<h3 class="stat-title">Total Productos</h3>';
+body += '<p class="stat-value">' + (typeof totalProductos !== 'undefined' ? totalProductos : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="stat-card">';
+body += '<div class="stat-icon stat-icon-purple"><i class="fas fa-shopping-bag"></i></div>';
+body += '<div class="stat-content">';
+body += '<h3 class="stat-title">Total Órdenes</h3>';
+body += '<p class="stat-value">' + (typeof totalOrdenes !== 'undefined' ? totalOrdenes : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="stat-card">';
+body += '<div class="stat-icon stat-icon-green"><i class="fas fa-dollar-sign"></i></div>';
+body += '<div class="stat-content">';
+body += '<h3 class="stat-title">Ingresos Totales</h3>';
+body += '<p class="stat-value">$' + (typeof ingresosTotales !== 'undefined' ? new Intl.NumberFormat('es-CO').format(ingresosTotales) : '0') + '</p>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="admin-sections">';
+body += '<div class="section-nav">';
+body += '<a href="/admin/dashboard" class="section-nav-item active"><i class="fas fa-cube"></i> Productos</a>';
+body += '<a href="/admin/categorias" class="section-nav-item"><i class="fas fa-tags"></i> Categorías</a>';
+body += '</div>';
+
+body += '<div class="products-section-admin">';
+body += '<div class="section-header">';
+body += '<h2 class="section-title">Productos</h2>';
+body += '<button class="btn-add-product" onclick="openAddProductModal()"><i class="fas fa-plus"></i> Agregar Producto</button>';
+body += '</div>';
+
+body += '<div class="products-grid-admin">';
+if (typeof products !== 'undefined' && products.length > 0) {
+    products.forEach(product => {
+        body += '<div class="product-card-admin">';
+        if (product.imagen) {
+            body += '<div class="product-image-admin"><img src="/uploads/' + product.imagen + '" alt="' + product.nombre + '"></div>';
+        } else {
+            body += '<div class="product-image-admin"><i class="' + (product.icon || 'fas fa-box') + '"></i></div>';
+        }
+        body += '<div class="product-info-admin">';
+        body += '<h3 class="product-title-admin">' + product.nombre + '</h3>';
+        body += '<p class="product-description-admin">' + product.descripcion + '</p>';
+        body += '<p class="product-category-admin">Categoría: ' + product.categoria + '</p>';
+        body += '<p class="product-price-admin">$' + new Intl.NumberFormat('es-CO').format(product.precio) + '</p>';
+        body += '<div class="product-actions">';
+        body += '<a href="/admin/productos/editar/' + product.id + '" class="btn-edit-product"><i class="fas fa-edit"></i> Editar</a>';
+        body += '<a href="/admin/productos/eliminar/' + product.id + '" class="btn-delete-product"><i class="fas fa-trash"></i> Eliminar</a>';
+        body += '</div>';
+        body += '</div>';
+        body += '</div>';
+    });
+} else {
+    body += '<p>No hay productos disponibles</p>';
+}
+body += '</div>';
+body += '</div>';
+body += '</div>';
+
+// Modal para agregar producto
+body += '<div id="addProductModal" class="modal">';
+body += '<div class="modal-content">';
+body += '<div class="modal-header">';
+body += '<h2>Agregar Nuevo Producto</h2>';
+body += '<span class="close-modal" onclick="closeAddProductModal()">&times;</span>';
+body += '</div>';
+body += '<form id="addProductForm" class="product-form" method="POST" action="/admin/productos/crear">';
+body += '<div class="form-group">';
+body += '<label for="nombre">Nombre del Producto</label>';
+body += '<input type="text" id="nombre" name="nombre" class="form-input" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="descripcion">Descripción</label>';
+body += '<textarea id="descripcion" name="descripcion" class="form-input" rows="4" required></textarea>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="precio">Precio</label>';
+body += '<input type="number" id="precio" name="precio" class="form-input" min="0" step="0.01" required>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="categoria">Categoría</label>';
+body += '<select id="categoria" name="categoria" class="form-input" required>';
+body += '<option value="">Seleccione una categoría</option>';
+if (typeof categories !== 'undefined' && categories.length > 0) {
+    categories.forEach(category => {
+        if (category.activa !== false) {
+            body += '<option value="' + category.nombre + '">' + category.nombre + '</option>';
+        }
+    });
+}
+body += '</select>';
+body += '</div>';
+body += '<div class="form-group">';
+body += '<label for="imagen">Imagen del Producto</label>';
+body += '<input type="file" id="imagen" name="imagen" class="form-input" accept="image/*">';
+body += '</div>';
+body += '<div class="modal-actions">';
+body += '<button type="submit" class="btn-save">Guardar Producto</button>';
+body += '<button type="button" class="btn-cancel" onclick="closeAddProductModal()">Cancelar</button>';
+body += '</div>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Panel de Administrador', body: body }) %>

@@ -1,0 +1,46 @@
+<%
+let body = '<div class="profile-page">';
+body += '<div class="profile-container">';
+body += '<div class="profile-header">';
+body += '<h1 class="profile-title">Mi Perfil</h1>';
+body += '</div>';
+
+body += '<div class="profile-content">';
+body += '<div class="profile-photo-section">';
+body += '<div class="profile-photo-container">';
+body += '<div class="profile-photo-placeholder">';
+body += '<i class="fas fa-user"></i>';
+body += '</div>';
+body += '<button class="btn-change-photo"><i class="fas fa-camera"></i> Cambiar foto</button>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="profile-form-section">';
+body += '<form class="profile-form" method="POST" action="/perfil/actualizar">';
+body += '<div class="form-group">';
+body += '<label for="nombre">Nombre</label>';
+body += '<input type="text" id="nombre" name="nombre" class="form-input" value="' + (typeof user !== 'undefined' && user.nombre ? user.nombre : '') + '" required>';
+body += '</div>';
+
+body += '<div class="form-group">';
+body += '<label for="apellidos">Apellidos</label>';
+body += '<input type="text" id="apellidos" name="apellidos" class="form-input" value="' + (typeof user !== 'undefined' && user.apellidos ? user.apellidos : '') + '" required>';
+body += '</div>';
+
+body += '<div class="form-group">';
+body += '<label for="email">Correo electrónico</label>';
+body += '<input type="email" id="email" name="email" class="form-input" value="' + (typeof user !== 'undefined' && user.email ? user.email : '') + '" required>';
+body += '</div>';
+
+body += '<div class="profile-form-actions">';
+body += '<button type="submit" class="btn-save-profile">Guardar cambios</button>';
+body += '<a href="/" class="btn-cancel-profile">Cancelar</a>';
+body += '</div>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('layout/layout', { title: 'SGEE - Mi Perfil', body: body }) %>
+

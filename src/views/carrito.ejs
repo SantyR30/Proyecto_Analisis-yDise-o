@@ -1,74 +1,74 @@
 <%
-const body = `
-    <div class="cart-page">
-        <div class="cart-container">
-            <!-- Carrito de Compras -->
-            <div class="cart-section">
-                <h2 class="cart-title">Carrito de compras</h2>
-                
-                <div class="cart-items">
-                    <!-- Item del carrito -->
-                    <div class="cart-item">
-                        <div class="cart-item-image">
-                            <i class="fas fa-laptop"></i>
-                        </div>
-                        <div class="cart-item-details">
-                            <h3 class="cart-item-title">Laptop Pro 15</h3>
-                            <p class="cart-item-description">Potente laptop para profesionales con procesador de última generación</p>
-                            <div class="cart-item-price">$ 2.500.000</div>
-                        </div>
-                        <div class="cart-item-controls">
-                            <button class="quantity-btn minus">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                            <span class="quantity">1</span>
-                            <button class="quantity-btn plus">
-                                <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                        <button class="delete-item">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
+let body = '<div class="cart-page">';
+body += '<div class="cart-container" id="cart-container">';
+body += '<div class="cart-section">';
+body += '<h2 class="cart-title">Carrito de compras</h2>';
+body += '<div class="cart-items" id="cart-items">';
 
-            <!-- Resumen de Orden -->
-            <div class="order-summary">
-                <h2 class="summary-title">Orden del pedido</h2>
-                
-                <div class="summary-details">
-                    <div class="summary-row">
-                        <span>Subtotal</span>
-                        <span>$ 2.500.000</span>
-                    </div>
-                    <div class="summary-row">
-                        <span>Envío</span>
-                        <span>$ 2.000</span>
-                    </div>
-                    <div class="summary-divider"></div>
-                    <div class="summary-row total">
-                        <span>Total</span>
-                        <span>$ 2.502.000</span>
-                    </div>
-                </div>
+if (cart && Array.isArray(cart) && cart.length > 0) {
+    cart.forEach((item, index) => {
+        body += '<div class="cart-item" data-item-index="' + index + '">';
+        body += '<div class="cart-item-image">';
+        body += '<i class="' + item.icon + '"></i>';
+        body += '</div>';
+        body += '<div class="cart-item-details">';
+        body += '<h3 class="cart-item-title">' + item.title + '</h3>';
+        body += '<p class="cart-item-description">' + item.description + '</p>';
+        body += '<div class="cart-item-price-info">';
+        body += '<span class="cart-item-unit-price">$ ' + new Intl.NumberFormat('es-CO').format(item.price) + ' c/u</span>';
+        body += '<div class="cart-item-price" data-item-price="' + item.price + '" data-item-index="' + index + '">$ ' + new Intl.NumberFormat('es-CO').format(item.price * item.quantity) + '</div>';
+        body += '</div>';
+        body += '</div>';
+        body += '<div class="cart-item-controls">';
+        body += '<button class="quantity-btn minus" data-item-index="' + index + '">';
+        body += '<i class="fas fa-minus"></i>';
+        body += '</button>';
+        body += '<span class="quantity" data-item-index="' + index + '">' + item.quantity + '</span>';
+        body += '<button class="quantity-btn plus" data-item-index="' + index + '">';
+        body += '<i class="fas fa-plus"></i>';
+        body += '</button>';
+        body += '</div>';
+        body += '<button class="delete-item" data-item-index="' + index + '">';
+        body += '<i class="fas fa-trash"></i>';
+        body += '</button>';
+        body += '</div>';
+    });
+} else {
+    body += '<p>No hay productos en el carrito</p>';
+}
 
-                <div class="shipping-section">
-                    <label for="shipping-address">Dirección de envío</label>
-                    <input 
-                        type="text" 
-                        id="shipping-address" 
-                        class="shipping-input" 
-                        placeholder="Ingresa tu dirección completa"
-                    >
-                </div>
+body += '</div>';
+body += '</div>';
 
-                <button class="btn-finalize" onclick="window.location.href='/confirmacion'">
-                    Finalizar compra
-                </button>
-            </div>
-        </div>
-    </div>
-`;
+body += '<div class="order-summary">';
+body += '<h2 class="summary-title">Orden del pedido</h2>';
+body += '<div class="summary-details">';
+body += '<div class="summary-row">';
+body += '<span>Subtotal</span>';
+body += '<span id="subtotal">$ ' + (typeof subtotal !== 'undefined' ? new Intl.NumberFormat('es-CO').format(subtotal) : '0') + '</span>';
+body += '</div>';
+body += '<div class="summary-row">';
+body += '<span>Envío</span>';
+body += '<span>$ ' + (typeof shipping !== 'undefined' ? new Intl.NumberFormat('es-CO').format(shipping) : '2.000') + '</span>';
+body += '</div>';
+body += '<div class="summary-divider"></div>';
+body += '<div class="summary-row total">';
+body += '<span>Total</span>';
+body += '<span id="total">$ ' + (typeof total !== 'undefined' ? new Intl.NumberFormat('es-CO').format(total) : '2.000') + '</span>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="shipping-section">';
+body += '<label for="shipping-address">Dirección de envío</label>';
+body += '<input type="text" id="shipping-address" name="shippingAddress" class="shipping-input" placeholder="Ingresa tu dirección completa" required>';
+body += '</div>';
+
+body += '<form method="POST" action="/carrito/finalizar" style="width: 100%;" id="finalize-order-form">';
+body += '<input type="hidden" name="shippingAddress" id="shipping-address-value">';
+body += '<button type="submit" class="btn-finalize">Finalizar compra</button>';
+body += '</form>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
 %>
 <%- include('layout/layout', { title: 'SGEE - Carrito de Compras', body: body }) %>

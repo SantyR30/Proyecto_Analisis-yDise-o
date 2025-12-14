@@ -1,0 +1,100 @@
+<%
+let body = '<div class="proveedor-dashboard">';
+body += '<div class="dashboard-header">';
+body += '<h1 class="dashboard-main-title">Panel de Envíos</h1>';
+body += '<p class="dashboard-subtitle">Gestiona el estado de las entregas</p>';
+body += '</div>';
+
+body += '<div class="shipment-stats">';
+body += '<div class="shipment-stat-card">';
+body += '<div class="shipment-stat-icon shipment-stat-yellow"><i class="fas fa-clock"></i></div>';
+body += '<div class="shipment-stat-content">';
+body += '<h3 class="shipment-stat-title">Pendientes</h3>';
+body += '<p class="shipment-stat-value" id="stat-pendientes">' + (typeof stats !== 'undefined' && stats.pendientes !== undefined ? stats.pendientes : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="shipment-stat-card">';
+body += '<div class="shipment-stat-icon shipment-stat-blue"><i class="fas fa-box"></i></div>';
+body += '<div class="shipment-stat-content">';
+body += '<h3 class="shipment-stat-title">En Preparación</h3>';
+body += '<p class="shipment-stat-value" id="stat-en-preparacion">' + (typeof stats !== 'undefined' && stats.enPreparacion !== undefined ? stats.enPreparacion : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="shipment-stat-card">';
+body += '<div class="shipment-stat-icon shipment-stat-purple"><i class="fas fa-truck"></i></div>';
+body += '<div class="shipment-stat-content">';
+body += '<h3 class="shipment-stat-title">En Envío</h3>';
+body += '<p class="shipment-stat-value" id="stat-en-envio">' + (typeof stats !== 'undefined' && stats.enEnvio !== undefined ? stats.enEnvio : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="shipment-stat-card">';
+body += '<div class="shipment-stat-icon shipment-stat-green"><i class="fas fa-check"></i></div>';
+body += '<div class="shipment-stat-content">';
+body += '<h3 class="shipment-stat-title">Entregados</h3>';
+body += '<p class="shipment-stat-value" id="stat-entregados">' + (typeof stats !== 'undefined' && stats.entregados !== undefined ? stats.entregados : 0) + '</p>';
+body += '</div>';
+body += '</div>';
+body += '</div>';
+
+body += '<div class="orders-section">';
+body += '<h2 class="orders-section-title">Órdenes Activas (' + (typeof stats !== 'undefined' && stats.totalActivas !== undefined ? stats.totalActivas : 0) + ')</h2>';
+
+body += '<div class="orders-grid" id="orders-grid">';
+
+if (typeof orders !== 'undefined' && Array.isArray(orders) && orders.length > 0) {
+    orders.forEach(order => {
+        let statusClass = 'order-status-pending';
+        let statusText = 'Pendiente';
+        let nextAction = 'Marcar como En Preparación';
+        let nextStatus = 'en_preparacion';
+        
+        if (order.estado === 'en_preparacion') {
+            statusClass = 'order-status-preparing';
+            statusText = 'En Preparación';
+            nextAction = 'Marcar como En Envío';
+            nextStatus = 'en_envio';
+        } else if (order.estado === 'en_envio') {
+            statusClass = 'order-status-shipping';
+            statusText = 'En Envío';
+            nextAction = 'Marcar como Entregado';
+            nextStatus = 'entregado';
+        } else if (order.estado === 'entregado') {
+            statusClass = 'order-status-delivered';
+            statusText = 'Entregado';
+            nextAction = '';
+            nextStatus = '';
+        }
+        
+        body += '<div class="order-card" data-order-id="' + order.id + '">';
+        body += '<div class="order-header">';
+        body += '<span class="order-id">' + order.id + '</span>';
+        body += '<span class="order-status ' + statusClass + '">' + statusText + '</span>';
+        body += '</div>';
+        body += '<div class="order-details">';
+        body += '<p class="order-customer">' + (order.cliente || 'Cliente Usuario') + '</p>';
+        body += '<p class="order-email">' + (order.email || 'customer@tienda.com') + '</p>';
+        body += '<p class="order-products">' + (order.productos || 'Sin productos') + '</p>';
+        body += '<p class="order-address">' + (order.direccion || 'No especificada') + '</p>';
+        body += '<p class="order-total">$' + new Intl.NumberFormat('es-CO').format(order.total || 0) + '</p>';
+        body += '<p class="order-dates">Creado: ' + (order.fechaCreacion || 'N/A') + '</p>';
+        body += '<p class="order-dates">Actualizado: ' + (order.fechaActualizacion || 'N/A') + '</p>';
+        body += '</div>';
+        if (nextAction) {
+            body += '<button class="btn-order-action" data-order-id="' + order.id + '" data-next-status="' + nextStatus + '">' + nextAction + '</button>';
+        }
+        body += '</div>';
+    });
+} else {
+    body += '<div class="no-orders">';
+    body += '<p>No hay órdenes activas en este momento</p>';
+    body += '</div>';
+}
+
+body += '</div>';
+body += '</div>';
+body += '</div>';
+%>
+<%- include('../layout/layout', { title: 'SGEE - Panel de Proveedor', body: body }) %>

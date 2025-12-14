@@ -2,9 +2,15 @@
 <header class="header">
     <div class="header-content">
         <div class="header-left">
-            <a href="/" class="logo-link">
-                <span class="logo-text">SGEE</span>
-            </a>
+            <% if (typeof user !== 'undefined' && user && (user.userType === 'administrador' || user.userType === 'proveedor')) { %>
+                <span class="logo-link" style="cursor: default;">
+                    <span class="logo-text">SGEE</span>
+                </span>
+            <% } else { %>
+                <a href="/" class="logo-link">
+                    <span class="logo-text">SGEE</span>
+                </a>
+            <% } %>
             <div class="header-icons">
                 <i class="fas fa-truck"></i>
                 <i class="fas fa-arrow-right"></i>
@@ -17,29 +23,72 @@
                 <i class="fas fa-search search-icon"></i>
             </div>
             <div class="header-user-icons">
-                <div class="user-icon-container">
-                    <i class="fas fa-user"></i>
-                    <span class="user-label">cliente</span>
-                </div>
-                <a href="/carrito" class="cart-icon-container">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-badge">1</span>
-                </a>
-                <i class="fas fa-bell"></i>
-                <i class="fas fa-sign-out-alt"></i>
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <a href="/perfil" class="user-profile-container">
+                        <div class="user-profile-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <span class="user-type-label"><%= user.userType || 'cliente' %></span>
+                    </a>
+                <% } else { %>
+                    <a href="/login" class="user-icon-container">
+                        <i class="fas fa-user"></i>
+                        <span class="user-label">Login</span>
+                    </a>
+                <% } %>
+                <% if (typeof user === 'undefined' || !user || (user.userType === 'cliente')) { %>
+                    <a href="/carrito" class="cart-icon-container" id="cart-icon-link">
+                        <i class="fas fa-shopping-cart" id="cart-icon"></i>
+                        <% if (typeof cartCount !== 'undefined' && cartCount > 0) { %>
+                            <span class="cart-badge" id="cart-badge" style="display: flex;"><%= cartCount %></span>
+                        <% } else { %>
+                            <span class="cart-badge" id="cart-badge" style="display: none;">0</span>
+                        <% } %>
+                    </a>
+                <% } %>
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <a href="/notificaciones" class="notification-icon-container" title="Notificaciones">
+                        <i class="fas fa-bell"></i>
+                    </a>
+                    <a href="/" class="logout-icon-container" title="Cerrar sesión" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                    <form id="logout-form" method="POST" action="/logout" style="display: none;"></form>
+                <% } %>
             </div>
         </div>
     </div>
 </header>
 
 <!-- Navigation Bar -->
+<% if (typeof user === 'undefined' || !user || user.userType === 'cliente') { %>
 <nav class="navbar">
     <div class="navbar-content">
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-            <span>Categoria</span>
+        <div class="categories-menu">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+                <span>Categorías</span>
+            </div>
+            <div class="categories-dropdown" id="categories-dropdown">
+                <a href="/" class="category-item <%= typeof categoriaFiltro === 'undefined' || categoriaFiltro === 'todas' ? 'active' : '' %>" data-categoria="todas">
+                    <i class="fas fa-th"></i>
+                    <span>Todas</span>
+                </a>
+                <% if (typeof categories !== 'undefined' && categories.length > 0) { %>
+                    <% categories.forEach(category => { %>
+                        <% if (category.activa !== false) { %>
+                            <a href="/?categoria=<%= encodeURIComponent(category.nombre) %>" class="category-item <%= typeof categoriaFiltro !== 'undefined' && categoriaFiltro === category.nombre ? 'active' : '' %>" data-categoria="<%= category.nombre %>">
+                                <i class="<%= category.icon || 'fas fa-box' %>"></i>
+                                <span><%= category.nombre %></span>
+                            </a>
+                        <% } %>
+                    <% }); %>
+                <% } %>
+            </div>
         </div>
     </div>
 </nav>
+<% } %>
+
 
 
